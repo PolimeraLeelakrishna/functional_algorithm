@@ -1,5 +1,7 @@
 package com.bridgeit.utility;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -39,6 +41,8 @@ public class Utility
 		double d=sc.nextDouble();
 		return d;
 	}
+	// file reader for getting path from file
+	
 //***************************************************************************************
 	                        //coupon number
 	
@@ -189,6 +193,20 @@ public class Utility
 		}
 			
 	}
+//**************************************************************************************************		
+		              //check leap year
+		
+		public static boolean leapyear(int y) // for checking leap year or not
+		{
+		if(y>999)
+		{
+			if(y%4==0 && y%100!=0 || y%400==0)
+			{
+			   return true;
+			}
+		}
+		return false;
+		}
 //****************************************************************************************
 		                 //power of two and check leap year
 		
@@ -203,10 +221,8 @@ public class Utility
 				 result=(int) Math.pow(2,i);
 			}
 			if(result>999)
-			{
-			 
-			 if((result % 4 == 0) && (result % 100 != 0) || (result % 400 == 0))
-			    	
+			{ 
+			 if((result % 4 == 0) && (result % 100 != 0) || (result % 400 == 0))   	
 		    {
 		    	System.out.println(result+" "+" "+"is leap year");
 		    	
@@ -524,7 +540,7 @@ public static void insertion(int[] arr,int len)
 //***********************************************************************************************
                                  //day of week
 
-  public static void day(int m,int y,int d)
+  public static int day(int m,int y,int d)
   {
 switch(m)   // it works on month.
 {
@@ -570,7 +586,29 @@ break;
     case 6:System.out.println("saturday");break; 
     default:
     }
+	return dow;
 }
+  //********************************************************************************************
+                      // check calander 
+  public static int calday(int m,int y,int d)  
+  {
+	  int y1 = y - (14 - m) / 12;
+	    int x = y1 + y1/4 - y1/100 + y1/400;
+	    int k = m + 12 * ((14 - m) / 12) - 2;
+	    int dow = (d + x + (31*k)/12) % 7;
+	    switch(dow)
+	    {
+	    case 0:System.out.println("sunday");break;
+	    case 1:System.out.println("monday");break;
+	    case 2:System.out.println("tueday");break;
+	    case 3:System.out.println("wednesday");break;
+	    case 4:System.out.println("thursday");break;
+	    case 5:System.out.println("friday");break;
+	    case 6:System.out.println("saturday");break; 
+	    default:
+	    }
+		return dow;
+  }
 
 //*************************************************************************************************
                               //temperature conversion
@@ -666,6 +704,68 @@ public static void decimaltobinary(int num,int[] store)
 		}
 			
   }
+}
+
+//**********************************************************************************
+                          //for reading file
+public static String[] fileReadString(String path) throws Exception
+
+{
+	String line;
+	FileReader fr = new FileReader(path); // reading data from file
+	BufferedReader br = new BufferedReader(fr); // reading data from for object
+
+	/* reading data from br object and adding it to linkedlist */
+	while ((line = br.readLine()) != null) 
+	{
+		String word[] = line.split("   ");// adding word in file to word array
+
+		return word;
+	}
+	br.close();
+	return null;
+}
+//**********************************************************************************************
+@SuppressWarnings("resource")
+public static int[] ReadFileInt(String path) throws Throwable {
+	String line;
+	 // reading data from file
+	FileReader fr = new FileReader(path);
+	BufferedReader br = new BufferedReader(fr); // reading data from fr object
+	while ((line = br.readLine()) != null) {
+		String word[] = line.split(" ");
+		int size = word.length;
+		int arr[] = new int[size];
+		/* for loop to convert string to integer data */
+		for (int i = 0; i < arr.length; i++)
+
+		{
+			arr[i] = Integer.parseInt(word[i]);
+         }
+		br.close();
+		return arr;
+	}
+	return null;
+
+}
+public static int[] sortnumbes(int[] number,int len) // function for sorting first string
+{
+	
+	int[] arr = null;
+	for(int i=0;i<len-1;i++)                    
+	{
+		for(int j=i+1;j<len;j++)      
+		{ 
+			char temp=0;
+			if(arr[j]<arr[i])
+			{
+				temp=(char) arr[i];               
+				arr[i]=arr[j];
+				arr[j]=temp;
+			}
+		}
+	}
+	return arr;
 }
 }
 
